@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+          
+       <title> www.about_us.com</title> 
+<style>
+        .home_link
+            {
+               position: absolute;
+      top: 15px;
+      left: 30px;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: bold;
+      color: black;
+       background: linear-gradient(to right, rgb(53, 210, 231) 50%, rgb(233, 53, 218) 50%);
+      padding: 10px 20px;       /* more horizontal padding for oval */
+      border-radius: 20px; 
+      width: 120px;
+text-align: center;
+padding: 10px 0;  /* rounded corners */
+     }
+
+      
+    
+    .box {
+    width: 1000px;
+    height: 300px;
+    border: 5px solid black;
+    padding-left: 100px;
+    position: absolute;    /* allow positioning */
+  display: flex;           /* ✅ side by side layout */
+    align-items: center;     /* vertically center children */
+    gap: 20px;               /* space between image and text */
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 25px;
+    background-color: yellow;
+
+    }
+
+  .box_img {
+   border-radius: 25px;  
+  
+}
+
+.box_img img {/* target the img inside .box_img */
+    max-width: 300px;   /* 👈 image will fit the yellow box */
+    height: auto;       /* 👈 keeps proper ratio */
+    border-radius: 15px;
+    object-fit: contain;
+}
+
+  
+    
+    body {
+    display: flex;                 /* Enable flexbox on body */
+    justify-content: center;       /* Center horizontally */
+    align-items: center;           /* Center vertically */
+    height: 100vh;                 /* Full viewport height */
+    margin: 0;                     /* Remove default margin */
+    flex-direction: column;        /* So nav links stay above the box */
+}
+
+</style>
+    </head>
+     <div class = navigation_bar>   </div>
+        <a class = home_link href ="front_page.html"> Home </a>
+        
+    <body  bgcolor="lightblue">
+        <h1><center> ABOUT US</h1></center>
+     
+           
+            <div class="box">  
+    <h1 style="text-align: center;">ABOUT US</h1>
+    <p>TeleMedicine is a simple and <b>user-friendly</b> platform that<b> connects patients with certified doctors online — anytime, anywhere</b>.</p>
+    <p>Our <b>mission </b> is to make healthcare <b>accessible, affordable, and convenient,</b> even for people living in remote areas, through online consultations and digital health management.</p>
+   <p>We provide services such as <b >online consultations, easy appointment booking, lab test reports, secure prescription management, symptom suggestion chatbot, and real-time stock details</b> — all in one place.</p>
+
+  <div class = box_img > <img src="govt_punjab.jpg" ></div>
+</div>
+
+      
+       
+          
+            
+           
+        </div>
+       
+        </div>
+<marquee direction="right" behavior="scroll" scrollamount="9" style="margin-top:1px;position:fixed; bottom:0; left:0; background-color: rgb(185, 247, 15);">
+    Health-care at your fingertips  Your Health, Our Priority!
+</marquee>
+         
+    </body>
+</html>

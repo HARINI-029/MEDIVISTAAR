@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TeleMedicine Login</title>
+    <style>
+        body {
+            background-image: url("login page.jpeg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Language Button at Top-Left */
+        
+        .login-box {
+            background-color: rgba(255, 255, 0, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            width: 350px;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            margin-bottom: 30px;
+        }
+
+        .login-box input[type="text"],
+        .login-box input[type="password"] {
+            width: 80%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid black;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .login-box button {
+            width: 85%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: red;
+            border: none;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        .login-box button:hover {
+            background-color: darkred;
+        }
+
+        .login-box a {
+            display: block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: blue;
+        }
+
+        .login-box a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Language Button -->
+    
+
+    <!-- Login Box -->
+    <div class="login-box">
+        <h2>Login</h2>
+        <form onsubmit="return validateForm()">
+            <input type="text" id="username" placeholder="Username" required><br>
+            <input type="password" id="password" placeholder="Password" required><br>
+            <button type="submit">Login</button>
+        </form>
+        <a href="sign_up.html">Don't have an account? Sign Up</a>
+    </div>
+
+    <script>
+        function validateForm() {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            let users = JSON.parse(localStorage.getItem("users") || "[]");
+            let user = users.find(u => u.username === username);
+
+            if(user) {
+                if(user.password === password) {
+                    alert("Login successful!");
+                    localStorage.setItem("loggedInUser", username);
+                    window.location.href = "front_page.html";
+                    return false;
+                } else {
+                    alert("Incorrect password");
+                    return false;
+                }
+            } else {
+                alert("Username not found. Please sign up first.");
+                return false;
+            }
+        }
+    </script>
+
+</body>
+</html>

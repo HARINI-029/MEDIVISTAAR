@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pa">
+<head>
+  <meta charset="UTF-8">
+  <title>ਆਨਲਾਈਨ ਸਲਾਹ ਬੁੱਕਿੰਗ</title>
+  <style>
+    body {
+      background-image: url("app.jpeg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center top;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .services {
+      position: absolute;
+      top: 15px;
+      left: 30px;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: bold;
+      color: black;
+      background: linear-gradient(to right, white 50%, rgb(233, 21, 198) 50%);
+      padding: 10px 20px;
+      border-radius: 20px;
+      width: 120px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #171816;
+      margin-bottom: 20px;
+    }
+
+    form {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 6px rgba(0,0,0,0.15);
+      display: inline-block;
+      width: 320px;
+      text-align: left;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background: #3498db;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #2980b9;
+    }
+
+    .card {
+      margin-top: 20px;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+      display: none;
+      text-align: left;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #27ae60;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    a:hover {
+      background: #1e8449;
+    }
+  </style>
+</head>
+<body>
+  <a class="services" href="services_punjabi.html">ਸੇਵਾਵਾਂ</a>
+
+  <h1>ਆਨਲਾਈਨ ਸਲਾਹ ਬੁੱਕ ਕਰੋ</h1>
+  <form id="appointmentForm">
+    <div class="form-group">
+      <label for="name">ਮਰੀਜ਼ ਦਾ ਨਾਮ</label>
+      <input type="text" id="name" placeholder="ਆਪਣਾ ਨਾਮ ਦਰਜ ਕਰੋ" required>
+    </div>
+    <div class="form-group">
+      <label for="email">ਈਮੇਲ ਪਤਾ</label>
+      <input type="email" id="email" placeholder="ਆਪਣਾ ਈਮੇਲ ਦਰਜ ਕਰੋ" required>
+    </div>
+    <div class="form-group">
+      <label for="doctor">ਡਾਕਟਰ ਚੁਣੋ</label>
+      <select id="doctor" required>
+        <option value="">-- ਡਾਕਟਰ ਚੁਣੋ --</option>
+        <option value="ਡਾ. ਜੌਨ ਸਮਿੱਥ">ਡਾ. ਜੌਨ ਸਮਿੱਥ</option>
+        <option value="ਡਾ. ਪ੍ਰੀਆ ਸ਼ਰਮਾ">ਡਾ. ਪ੍ਰੀਆ ਸ਼ਰਮਾ</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="date">ਮਿਤੀ ਚੁਣੋ</label>
+      <input type="date" id="date" required>
+    </div>
+    <div class="form-group">
+      <label for="time">ਸਮਾਂ ਚੁਣੋ</label>
+      <input type="time" id="time" required>
+    </div>
+    <button type="submit">ਅਪਾਇੰਟਮੈਂਟ ਬੁੱਕ ਕਰੋ</button>
+  </form>
+
+  <div class="card" id="confirmationCard">
+    <h2>ਅਪਾਇੰਟਮੈਂਟ ਪੁਸ਼ਟੀ ਕੀਤੀ ✅</h2>
+    <p id="details"></p>
+    <p>ਤੁਹਾਡਾ ਗੂਗਲ ਮੀਟ ਲਿੰਕ:</p>
+    <a id="meetLink" href="#" target="_blank">ਗੂਗਲ ਮੀਟ ਜੁੜੋ</a>
+  </div>
+
+  <script>
+    const form = document.getElementById("appointmentForm");
+    const confirmationCard = document.getElementById("confirmationCard");
+    const details = document.getElementById("details");
+    const meetLink = document.getElementById("meetLink");
+
+    const demoLinks = [
+      "https://meet.google.com/abc-defg-hij",
+      "https://meet.google.com/xyz-pqrs-lmn",
+      "https://meet.google.com/uvw-rstj-opq"
+    ];
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const doctor = document.getElementById("doctor").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+
+      const link = demoLinks[Math.floor(Math.random() * demoLinks.length)];
+
+      details.innerHTML = `ਮਰੀਜ਼: <strong>${name}</strong><br>
+                           ਡਾਕਟਰ: <strong>${doctor}</strong><br>
+                           ਮਿਤੀ: <strong>${date}</strong><br>
+                           ਸਮਾਂ: <strong>${time}</strong>`;
+      meetLink.href = link;
+
+      confirmationCard.style.display = "block";
+    });
+  </script>
+</body>
+</html>

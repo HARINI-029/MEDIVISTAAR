@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ਟੈਲੀਮੈਡੀਸਨ ਸਾਈਨ ਅੱਪ</title>
+    <style>
+        /* BODY STYLES */
+        body {
+            background-image: url("login page.jpeg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* SIGN UP BOX */
+        .signup-box {
+            background-color: rgba(255, 255, 0, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            width: 400px;
+            text-align: center;
+        }
+
+        .signup-box h2 {
+            margin-bottom: 30px;
+        }
+
+        /* INPUT FIELDS */
+        .signup-box input[type="text"],
+        .signup-box input[type="email"],
+        .signup-box input[type="password"] {
+            width: 80%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid black;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        /* BUTTON */
+        .signup-box button {
+            width: 85%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: red;
+            border: none;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        .signup-box button:hover {
+            background-color: darkred;
+        }
+
+        /* LINK TO LOGIN */
+        .signup-box a {
+            display: block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: blue;
+        }
+
+        .signup-box a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="signup-box">
+        <h2>ਸਾਈਨ ਅੱਪ</h2>
+        <form onsubmit="return validateForm()">
+            <input type="text" id="name" placeholder="ਪੂਰਾ ਨਾਮ" required><br>
+            <input type="email" id="email" placeholder="ਈਮੇਲ" required><br>
+            <input type="text" id="username" placeholder="ਯੂਜ਼ਰ ਨਾਂ" required><br>
+            <input type="password" id="password" placeholder="ਪਾਸਵਰਡ" required><br>
+            <input type="password" id="confirm-password" placeholder="ਪਾਸਵਰਡ ਪੁਸ਼ਟੀ ਕਰੋ" required><br>
+            <button type="submit">ਸਾਈਨ ਅੱਪ</button>
+        </form>
+        <a href="login_punjabi.html">ਪਹਿਲਾਂ ਹੀ ਖਾਤਾ ਹੈ? ਲੌਗਿਨ ਕਰੋ</a>
+    </div>
+
+    <script>
+        function validateForm() {
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirm-password").value;
+
+            if (!name || !email || !username || !password || !confirmPassword) {
+                alert("ਕਿਰਪਾ ਕਰਕੇ ਸਾਰੇ ਖੇਤਰ ਭਰੋ");
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert("ਪਾਸਵਰਡ ਮੇਲ ਨਹੀਂ ਖਾਂਦੇ");
+                return false;
+            }
+
+            let users = JSON.parse(localStorage.getItem("users") || "[]");
+            let userExists = users.some(u => u.username === username);
+            if(userExists){
+                alert("ਯੂਜ਼ਰ ਨਾਂ ਪਹਿਲਾਂ ਹੀ ਵਰਤਿਆ ਗਿਆ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਹੋਰ ਚੁਣੋ।");
+                return false;
+            }
+
+            users.push({ name, email, username, password });
+            localStorage.setItem("users", JSON.stringify(users));
+
+            alert("ਸਾਈਨ ਅੱਪ ਸਫਲ! ਹੁਣ ਤੁਸੀਂ ਲੌਗਿਨ ਕਰ ਸਕਦੇ ਹੋ।");
+            window.location.href = "login.html";
+
+            return false;
+        }
+    </script>
+
+</body>
+</html>

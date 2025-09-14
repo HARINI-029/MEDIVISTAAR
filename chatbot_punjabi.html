@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pa">
+<head>
+  <meta charset="UTF-8">
+  <title>ਮੈਡੀਕਲ ਚੈਟਬੌਟ</title>
+  <style>
+    body {
+         background-image: url("chatbot.jpg");
+         background-size: cover;
+         background-repeat: no-repeat;
+         background-position: right top;
+         margin: 0;
+         font-family: Arial, sans-serif;
+
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         height: 100vh;
+    }
+
+    .services {
+        position: absolute;
+        top: 15px;
+        left: 30px;
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: bold;
+        color: black;
+        background: linear-gradient(to right, white 50%, rgb(245, 14, 195) 50%);
+        padding: 10px 20px;
+        border-radius: 20px;
+        width: 120px;
+        text-align: center;
+    }
+
+    .chat-container {
+      width: 400px;
+      height: 550px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Header */
+    .chat-header {
+      background: #007bff;
+      color: white;
+      text-align: center;
+      padding: 12px;
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      border-bottom: 2px solid #0056b3;
+    }
+
+    .chat-box {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      scroll-behavior: smooth;
+    }
+
+    .message {
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 6px;
+      max-width: 80%;
+    }
+
+    .user {
+      background: #d1e7ff;
+      align-self: flex-end;
+    }
+
+    .bot {
+      background: #e9ecef;
+      align-self: flex-start;
+    }
+
+    .input-box {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+
+    .input-box input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+    }
+
+    .input-box button {
+      padding: 10px 15px;
+      border: none;
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    .input-box button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <a class="services" href="services_punjabi.html">ਸੇਵਾਵਾਂ</a>
+  <div class="chat-container">
+    <div class="chat-header">🤖 ਟੈਲੀਬੌਟ</div>
+    <div class="chat-box" id="chatBox"></div>
+    <div class="input-box">
+      <input type="text" id="userInput" placeholder="ਆਪਣੇ ਲੱਛਣ ਇੱਥੇ ਲਿਖੋ...">
+      <button onclick="sendMessage()">ਭੇਜੋ</button>
+    </div>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chatBox");
+
+    function addMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.classList.add("message", sender);
+      msg.innerText = text;
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function botReply(userMsg) {
+      userMsg = userMsg.toLowerCase();
+
+      if (userMsg.includes("ਬੁਖਾਰ") || userMsg.includes("fever")) {
+        return "ਤੁਹਾਨੂੰ ਵਾਇਰਲ ਬੁਖਾਰ ਹੋ ਸਕਦਾ ਹੈ। ਪਾਣੀ ਪੀਂਦੇ ਰਹੋ, ਅਰਾਮ ਕਰੋ ਅਤੇ ਪੈਰਾਸੀਟਾਮੋਲ ਲੈ ਸਕਦੇ ਹੋ। ਜੇ ਇਹ 3 ਦਿਨ ਤੋਂ ਵੱਧ ਰਹੇ, ਤਾਂ ਡਾਕਟਰ ਨਾਲ ਸਲਾਹ ਕਰੋ।";
+      } else if (userMsg.includes("ਸਰਦੀ") || userMsg.includes("cold")) {
+        return "ਆਮ ਸਰਦੀ ਪਾਈ ਗਈ। ਗਰਮ ਪਾਣੀ ਪੀਓ, ਭਾਪ ਲਵੋ ਅਤੇ ਅਚ ਛੰਗਾ ਅਰਾਮ ਕਰੋ।";
+      } else if (userMsg.includes("ਖੰਘ") || userMsg.includes("cough")) {
+        return "ਖੰਘ ਗਲੇ ਦੀ ਜਲਨ ਜਾਂ ਸੰਕਰਮਣ ਕਾਰਨ ਹੋ ਸਕਦੀ ਹੈ। ਗਰਮ ਪਾਣੀ ਅਤੇ ਸ਼ਹਿਦ ਪੀਓ। ਜੇ 1 ਹਫ਼ਤੇ ਤੋਂ ਵੱਧ ਰਹੇ, ਡਾਕਟਰ ਨੂੰ ਦਿਖਾਓ।";
+      } else if (userMsg.includes("ਗਲੇ ਦਾ ਦਰਦ") || userMsg.includes("throat pain")) {
+        return "ਗਲੇ ਦਾ ਦਰਦ ਸੰਕਰਮਣ ਕਾਰਨ ਹੋ ਸਕਦਾ ਹੈ। ਗਰਮ ਨਮਕ ਵਾਲੇ ਪਾਣੀ ਨਾਲ ਘਾਰਗਲ ਕਰੋ ਅਤੇ ਗਰਮ ਪਾਣੀ ਪੀਓ।";
+      } else if (userMsg.includes("ਛਾਤੀ ਦਰਦ") || userMsg.includes("chest pain")) {
+        return "⚠️ ਛਾਤੀ ਦਾ ਦਰਦ ਗੰਭੀਰ ਹੋ ਸਕਦਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਤੁਰੰਤ ਡਾਕਟਰ ਨਾਲ ਸਲਾਹ ਕਰੋ।";
+      } else if (userMsg.includes("ਸਿਰ ਦਰਦ") || userMsg.includes("headache")) {
+        return "ਸਿਰ ਦਰਦ ਤਣਾਅ, ਡਿਹਾਈਡ੍ਰੇਸ਼ਨ ਜਾਂ ਨੀਂਦ ਦੀ ਘਾਟ ਕਾਰਨ ਹੋ ਸਕਦਾ ਹੈ। ਪਾਣੀ ਪੀਓ ਅਤੇ ਅਰਾਮ ਕਰੋ। ਜੇ ਜ਼ਿਆਦਾ ਦਰਦ ਹੈ, ਡਾਕਟਰ ਨੂੰ ਦਿਖਾਓ।";
+      } else if (userMsg.includes("ਪੇਟ ਦਰਦ") || userMsg.includes("stomach pain")) {
+        return "ਪੇਟ ਦਰਦ ਅਹਾਰ ਹਜ਼ਮ ਨਾ ਹੋਣ ਕਾਰਨ ਹੋ ਸਕਦਾ ਹੈ। ਗਰਮ ਪਾਣੀ ਪੀਓ ਅਤੇ ਭਾਰੀ ਖਾਣੇ ਤੋਂ ਬਚੋ। ਜੇ ਲਗਾਤਾਰ ਰਹੇ, ਡਾਕਟਰ ਨੂੰ ਦਿਖਾਓ।";
+      } else {
+        return "ਮੈਨੂੰ ਇਸ ਬਾਰੇ ਯਕੀਨ ਨਹੀਂ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਮੈਡੀਕਲ ਪੇਸ਼ੇਵਰ ਨਾਲ ਸਲਾਹ ਕਰੋ।";
+      }
+    }
+
+    function sendMessage() {
+      const userInput = document.getElementById("userInput");
+      const userMsg = userInput.value.trim();
+      if (!userMsg) return;
+
+      addMessage(userMsg, "user");
+      const reply = botReply(userMsg);
+      setTimeout(() => addMessage(reply, "bot"), 600);
+
+      userInput.value = "";
+    }
+
+    // Enter ਦਬਾਉਣ 'ਤੇ ਭੇਜਣ ਦੀ ਸਹੂਲਤ
+    document.getElementById("userInput").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
+
+    // ਲੋਡ ਹੋਣ 'ਤੇ ਸਵਾਗਤ ਸੁਨੇਹਾ
+    window.onload = () => {
+      setTimeout(() => {
+        addMessage("ਹੈਲੋ 👋, ਆਸ ਹੈ ਕਿ ਤੁਸੀਂ ਠੀਕ ਹੋ। ਜੇ ਨਹੀਂ, ਤਾਂ ਆਪਣੇ ਲੱਛਣ ਇੱਥੇ ਲਿਖੋ।", "bot");
+      }, 500);
+    };
+  </script>
+</body>
+</html>

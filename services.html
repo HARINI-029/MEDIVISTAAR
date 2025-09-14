@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TeleMedicine Services</title>
+    <style>
+        body {
+            background-image: url("services.jpeg");
+            background-size: cover;               
+            background-repeat: no-repeat;
+            background-position: top;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+
+         .home_link
+            {
+               position: absolute;
+      top: 15px;
+      left: 30px;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: bold;
+      color: black;
+       background: linear-gradient(to right, white 50%, rgb(243, 8, 204) 50%);
+      padding: 10px 20px;       /* more horizontal padding for oval */
+      border-radius: 20px; 
+      width: 120px;
+text-align: center;
+padding: 10px 0;  /* rounded corners */
+     }
+
+        h1 {
+            margin-bottom: 40px;
+            color: rgb(243, 18, 18);
+        }
+
+        .service-btn {
+            display: inline-block;
+            /* half white / half light green */
+            background: linear-gradient(to right, white 50%, #0bdb0b 50%);
+            border: none;           /* remove border */
+            padding: 20px 40px;
+            margin: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 25px;    /* pill shape */
+            cursor: pointer;
+            text-decoration: none;
+            color: black;
+            transition: 0.3s;
+        }
+
+        .service-btn:hover {
+            /* slightly darker green on hover */
+            background: linear-gradient(to right, white 50%, #7cd77c 50%);
+            transform: scale(1.05);
+        }
+
+        .services-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Our Services</h1>
+     <a class = home_link href ="front_page.html"> Home </a>
+    <div class="services-container">
+        <a href="video.html" class="service-btn">Online Consultation</a>
+     
+        <a href="file.html" class="service-btn">Prescription Management</a>
+        <a href="chatbot.html" class="service-btn">Symptom Suggestion Chatbot</a>
+        <a href="stock.html" class="service-btn">Real-Time Stock Details</a>
+    </div>
+</body>
+</html>

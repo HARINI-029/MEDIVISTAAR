@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Documents</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("file.webp");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center top;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+           .service {
+            position: absolute;
+            top: 15px;
+            left: 30px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            color: black;
+            background: linear-gradient(to right, white 50%, rgb(238, 19, 190) 50%);
+            padding: 10px 20px;
+            border-radius: 20px;
+            width: 120px;
+            text-align: center;
+        }
+
+        h1 {
+            color: rgb(230, 222, 222);
+            -webkit-text-stroke: 2px yellow; /* border around text */
+            margin-top: 50px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .upload-box {
+            width: 400px;
+            padding: 25px;
+            border: 2px solid #333;
+            border-radius: 15px;
+            background-color: rgba(255,255,255,0.9);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        input[type="file"] {
+            margin: 15px 0;
+            padding: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .doc-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .doc-list ul {
+            padding-left: 20px;
+        }
+
+        .doc-list a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .doc-list a:hover {
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload Your Documents</h1>
+     <a class="service" href="services.html">Service</a>
+
+    <div class="upload-box">
+        <input type="file" id="fileInput"><br>
+        <button onclick="saveFile()">Upload</button>
+
+        <div class="doc-list">
+            <h3>Saved Documents:</h3>
+            <ul id="fileList"></ul>
+        </div>
+    </div>
+
+    <script>
+        // Display saved files on page load
+        window.onload = function() {
+            showFiles();
+        };
+
+        function saveFile() {
+            const fileInput = document.getElementById("fileInput").files[0];
+            if (!fileInput) {
+                alert("Please select a file first!");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Store uploaded file with "doc_" prefix
+                localStorage.setItem("doc_" + fileInput.name, e.target.result);
+                alert("File uploaded locally!");
+                showFiles();
+            };
+            reader.readAsDataURL(fileInput);
+        }
+
+        function showFiles() {
+            const fileList = document.getElementById("fileList");
+            fileList.innerHTML = "";
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+
+                // Only show items starting with "doc_"
+                if (key.startsWith("doc_")) {
+                    const li = document.createElement("li");
+                    const a = document.createElement("a");
+                    a.href = localStorage.getItem(key);
+                    a.download = key.replace("doc_", ""); // remove prefix for download
+                    a.textContent = key.replace("doc_", "");
+                    li.appendChild(a);
+                    fileList.appendChild(li);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

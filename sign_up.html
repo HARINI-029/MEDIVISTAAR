@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TeleMedicine Sign Up</title>
+    <style>
+        /* BODY STYLES */
+        body {
+            background-image: url("login page.jpeg");   /* background image */
+            background-size: cover;               /* cover whole screen */
+            background-repeat: no-repeat;
+            background-position: center;
+            
+            display: flex;                        /* center the box */
+            justify-content: center;
+            align-items: center;
+            
+            height: 100vh;                        /* full viewport height */
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* SIGN UP BOX */
+        .signup-box {
+            background-color: rgba(255, 255, 0, 0.9); /* yellow with slight transparency */
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            width: 400px;
+            text-align: center;
+        }
+
+        .signup-box h2 {
+            margin-bottom: 30px;
+        }
+
+        /* INPUT FIELDS */
+        .signup-box input[type="text"],
+        .signup-box input[type="email"],
+        .signup-box input[type="password"] {
+            width: 80%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid black;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        /* BUTTON */
+        .signup-box button {
+            width: 85%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: red;
+            border: none;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        .signup-box button:hover {
+            background-color: darkred;
+        }
+
+        /* LINK TO LOGIN */
+        .signup-box a {
+            display: block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: blue;
+        }
+
+        .signup-box a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIGN UP BOX -->
+    <div class="signup-box">
+        <h2>Sign Up</h2>
+        <form onsubmit="return validateForm()">
+            <input type="text" id="name" placeholder="Full Name" required><br>
+            <input type="email" id="email" placeholder="Email" required><br>
+            <input type="text" id="username" placeholder="Username" required><br>
+            <input type="password" id="password" placeholder="Password" required><br>
+            <input type="password" id="confirm-password" placeholder="Confirm Password" required><br>
+            <button type="submit">Sign Up</button>
+        </form>
+        <a href="login.html">Already have an account? Login</a>
+    </div>
+
+    <script>
+        // FUNCTION TO VALIDATE FORM AND STORE DATA IN LOCAL STORAGE
+        function validateForm() {
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirm-password").value;
+
+            // Check if all fields are filled
+            if (!name || !email || !username || !password || !confirmPassword) {
+                alert("Please fill in all fields");
+                return false;
+            }
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                alert("Passwords do not match");
+                return false;
+            }
+
+            // Get existing users from localStorage or initialize empty array
+            let users = JSON.parse(localStorage.getItem("users") || "[]");
+
+            // Check if username already exists
+            let userExists = users.some(u => u.username === username);
+            if(userExists){
+                alert("Username already taken. Please choose another.");
+                return false;
+            }
+
+            // Add new user to array
+            users.push({ name, email, username, password });
+
+            // Save back to localStorage
+            localStorage.setItem("users", JSON.stringify(users));
+
+            alert("Sign up successful! You can now login.");
+            
+            // Optionally redirect to login page
+            window.location.href = "login.html";
+
+            return false; // prevent default form submission
+        }
+    </script>
+
+</body>
+</html>

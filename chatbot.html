@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Medical Chatbot</title>
+  <style>
+    body {
+         background-image: url("chatbot.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: right top;
+            margin: 0;
+      font-family: Arial, sans-serif;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+      .services {
+            position: absolute;
+            top: 15px;
+            left: 30px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            color: black;
+            background: linear-gradient(to right, white 50%, rgb(245, 14, 195) 50%);
+            padding: 10px 20px;
+            border-radius: 20px;
+            width: 120px;
+            text-align: center;
+        }
+    .chat-container {
+      width: 400px;
+      height: 550px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Header */
+    .chat-header {
+      background: #007bff;
+      color: white;
+      text-align: center;
+      padding: 12px;
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      border-bottom: 2px solid #0056b3;
+    }
+
+    .chat-box {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      scroll-behavior: smooth;
+    }
+
+    .message {
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 6px;
+      max-width: 80%;
+    }
+
+    .user {
+      background: #d1e7ff;
+      align-self: flex-end;
+    }
+
+    .bot {
+      background: #e9ecef;
+      align-self: flex-start;
+    }
+
+    .input-box {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+
+    .input-box input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+    }
+
+    .input-box button {
+      padding: 10px 15px;
+      border: none;
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    .input-box button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+     <a class="services" href="services.html">Services</a>
+  <div class="chat-container">
+    <div class="chat-header">🤖 TeleBot</div>
+    <div class="chat-box" id="chatBox"></div>
+    <div class="input-box">
+      <input type="text" id="userInput" placeholder="Type your symptoms...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chatBox");
+
+    function addMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.classList.add("message", sender);
+      msg.innerText = text;
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function botReply(userMsg) {
+      userMsg = userMsg.toLowerCase();
+
+      if (userMsg.includes("fever")) {
+        return "You may have a viral fever. Stay hydrated, take rest, and consider paracetamol. If it persists beyond 3 days, consult a doctor.";
+      } else if (userMsg.includes("cold")) {
+        return "Common cold detected. Drink warm fluids, take steam inhalation, and rest well.";
+      } else if (userMsg.includes("cough")) {
+        return "A cough can be due to throat irritation or infection. Drink warm water and honey. If it lasts >1 week, see a doctor.";
+      } else if (userMsg.includes("throat pain")) {
+        return "Throat pain may be due to infection. Try warm salt-water gargle and warm fluids.";
+      } else if (userMsg.includes("chest pain")) {
+        return "⚠️ Chest pain can be serious. Please consult a doctor immediately.";
+      } else if (userMsg.includes("headache")) {
+        return "Headaches can be due to stress, dehydration, or lack of sleep. Drink water and rest. If severe, consult a doctor.";
+      } else if (userMsg.includes("stomach pain")) {
+        return "Stomach pain may be due to indigestion. Drink warm water and avoid heavy foods. If persistent, see a doctor.";
+      } else {
+        return "I'm not sure about that. Please consult a medical professional.";
+      }
+    }
+
+    function sendMessage() {
+      const userInput = document.getElementById("userInput");
+      const userMsg = userInput.value.trim();
+      if (!userMsg) return;
+
+      addMessage(userMsg, "user");
+      const reply = botReply(userMsg);
+      setTimeout(() => addMessage(reply, "bot"), 600);
+
+      userInput.value = "";
+    }
+
+    // Allow pressing Enter to send
+    document.getElementById("userInput").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
+
+    // Show welcome message on load
+    window.onload = () => {
+      setTimeout(() => {
+        addMessage("Hi 👋, hope you are doing well. If not, type your symptoms here.", "bot");
+      }, 500);
+    };
+  </script>
+</body>
+</html>
