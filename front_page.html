@@ -25,6 +25,50 @@
             margin: 20px 0;
         }
 
+        /* Header Container */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Logout Button */
+        #logoutBtn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: none;
+            background-color: #f2f2f2;
+        }
+        #logoutBtn img {
+            width: 20px;
+            height: 20px;
+        }
+        #logoutBtn:hover {
+            background-color: rgb(237, 240, 84);
+        }
+
+        /* User Info */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .user-info img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
         /* Navigation Links */
         .nav-bar {
             display: flex;
@@ -33,7 +77,6 @@
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
-
         .nav-link {
             text-decoration: none;
             font-size: 4vw; /* responsive font */
@@ -45,58 +88,12 @@
             text-align: center;
         }
 
-        /* Greeting and profile */
-        .user-info {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 4vw; /* responsive */
-            font-weight: bold;
-            color: black;
-        }
-
-        .user-info img {
-            width: 6vw;
-            height: 6vw;
-            border-radius: 50%;
-        }
-
-        /* Logout button */
-        #logoutBtn {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            font-size: 3.5vw;
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 15px;
-            color: rgb(26, 24, 24);
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        #logoutBtn img {
-            width: 5vw;
-            height: 5vw;
-        }
-
-        #logoutBtn:hover {
-            background-color: rgb(237, 240, 84);
-        }
-
-        /* Main box with image and text */
+        /* Main Box with Image and Text */
         .box-container {
             display: flex;
             justify-content: center;
             margin: 20px;
         }
-
         .box {
             display: flex;
             flex-direction: row;
@@ -108,35 +105,29 @@
             background-color: rgba(48, 240, 22, 0.8);
             overflow: hidden;
         }
-
         .image-side, .text-side {
             flex: 1 1 300px;
         }
-
         .image-side img {
             width: 100%;
             height: auto;
             object-fit: cover;
             border-radius: 25px;
         }
-
         .text-side {
             padding: 15px;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
-
         .text-side h1 {
             font-size: 6vw;
             margin: 5px 0;
         }
-
         .text-side h3 {
             font-size: 4vw;
             margin: 5px 0;
         }
-
         .text-side p {
             font-size: 3.5vw;
         }
@@ -151,6 +142,7 @@
             font-size: 4vw;
         }
 
+        /* Responsive adjustments */
         @media(min-width:768px){
             .nav-link { font-size: 18px; }
             .user-info { font-size: 18px; }
@@ -163,12 +155,23 @@
     </style>
 </head>
 <body>
+    <!-- Page Title -->
     <h1 class="title">MEDVISTAAR</h1>
 
-    <!-- Logout Button -->
-    <button id="logoutBtn">
-        <img src="logout.png" alt="Logout Icon"> Logout
-    </button>
+    <!-- Header Container for Logout and User Greeting -->
+    <div class="header-container">
+        <div class="left-header">
+            <button id="logoutBtn" style="display:none;">
+                <img src="logout.png" alt="Logout Icon"> Logout
+            </button>
+        </div>
+        <div class="right-header">
+            <div class="user-info" id="userGreetingContainer" style="display:none;">
+                <span id="userGreeting"></span>
+                <img src="icon.jpeg" alt="Profile">
+            </div>
+        </div>
+    </div>
 
     <!-- Navigation -->
     <div class="nav-bar">
@@ -180,13 +183,7 @@
         <a class="nav-link" href="sign_up.html" id="signupLink">Signup</a>
     </div>
 
-    <!-- Greeting and Profile -->
-    <div class="user-info" id="userGreetingContainer" style="display:none;">
-        <span id="userGreeting"></span>
-        <img src="icon.jpeg" alt="Profile">
-    </div>
-
-    <!-- Centered Box Container -->
+    <!-- Main Box Container -->
     <div class="box-container">
         <div class="box">
             <div class="image-side">
@@ -210,6 +207,7 @@
     </marquee>
 
     <script>
+        // Display logged-in username and profile
         let loggedInUser = localStorage.getItem("loggedInUser");
         if(loggedInUser) {
             document.getElementById("userGreeting").innerText = "👋 Hello, " + loggedInUser;
@@ -218,6 +216,8 @@
             document.getElementById("signupLink").style.display = "none";
             document.getElementById("logoutBtn").style.display = "flex";
         }
+
+        // Logout function
         document.getElementById("logoutBtn").addEventListener("click", function() {
             localStorage.removeItem("loggedInUser");
             window.location.href = "index.html";
