@@ -4,6 +4,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TeleMedicine Login</title>
     <style>
+        /* Make the login box responsive */
+.login-box {
+    width: 90%;         /* shrink on small screens */
+    max-width: 350px;   /* don’t get too wide */
+    padding: 20px;      /* reduce padding for small devices */
+}
+
+/* Make inputs and button take full width */
+.login-box input[type="text"],
+.login-box input[type="password"],
+.login-box button {
+    width: 100%;
+    box-sizing: border-box; /* ensures padding doesn’t break width */
+}
+
+/* Responsive adjustment for very small screens */
+@media (max-width: 480px) {
+    .login-box {
+        padding: 15px;
+        border-radius: 12px;
+    }
+
+    .login-box h2 {
+        font-size: 22px;
+    }
+
+    .login-box button {
+        font-size: 16px;
+        padding: 10px;
+    }
+}
+
         body {
             background-image: url("login page.jpeg");
             background-size: cover;
