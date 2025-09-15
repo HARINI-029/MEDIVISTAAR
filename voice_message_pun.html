@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ਮਰੀਜ਼ - MedVistaar</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    min-height: 100vh;
+  }
+
+  .container {
+    background: rgba(255,255,255,0.95);
+    padding: 25px 30px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  }
+
+  h2 {
+    text-align: center;
+    color: #e74c3c;
+    margin-bottom: 25px;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 2px solid #2980b9;
+    font-size: 16px;
+    resize: none;
+  }
+
+  button {
+    padding: 12px 20px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s;
+  }
+
+  .record-btn { background-color: #3498db; color: white; }
+  .stop-btn { background-color: #e67e22; color: white; }
+  .send-btn { background-color: #2ecc71; color: white; width: 100%; }
+
+  button:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+
+  #status {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #2980b9;
+    text-align: center;
+  }
+
+  .messages {
+    margin-top: 20px;
+  }
+
+  .message-card {
+    background: #f1f1f1;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+
+  audio {
+    width: 100%;
+    margin-top: 5px;
+  }
+
+  @media(max-width:480px){
+    h2 { font-size: 1.6rem; }
+    textarea { font-size: 14px; }
+    button { font-size: 14px; padding: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>ਮਰੀਜ਼ ਡੈਸ਼ਬੋਰਡ</h2>
+
+  <textarea id="textMsg" rows="3" placeholder="ਇੱਥੇ ਆਪਣਾ ਸੁਨੇਹਾ ਲਿਖੋ..."></textarea>
+  <button class="send-btn" onclick="sendTextMessage()">ਟੈਕਸਟ ਭੇਜੋ</button>
+
+  <hr style="margin:20px 0;">
+
+  <button class="record-btn" id="recordBtn">ਆਵਾਜ਼ ਰਿਕਾਰਡ ਕਰੋ</button>
+  <button class="stop-btn" id="stopBtn" disabled>ਰੋਕੋ</button>
+
+  <p id="status"></p>
+
+  <div class="messages" id="messagesContainer"></div>
+</div>
+
+<script>
+let mediaRecorder;
+let audioChunks = [];
+
+// ਪੇਜ਼ ਲੋਡ ਹੋਣ ਤੇ ਸੇਵ ਕੀਤੇ ਸੁਨੇਹੇ ਲੋਡ ਕਰੋ
+window.onload = loadMessages;
+
+function sendTextMessage() {
+  const text = document.getElementById("textMsg").value.trim();
+  if(!text){
+    alert("ਕਿਰਪਾ ਕਰਕੇ ਸੁਨੇਹਾ ਲਿਖੋ!");
+    return;
+  }
+
+  const messages = JSON.parse(localStorage.getItem("messages") || "[]");
+  messages.push({
+    type: "text",
+    message: text,
+    timestamp: new Date().toLocaleString(),
+  });
+  localStorage.setItem("messages", JSON.stringify(messages));
+  document.getElementById("textMsg").value = "";
+  document.getElementById("status").innerText = "ਟੈਕਸਟ ਸੁਨੇਹਾ ਸੇਵ ਕੀਤਾ ਗਿਆ!";
+  loadMessages();
+}
+
+document.getElementById("recordBtn").onclick = async () => {
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  mediaRecorder = new MediaRecorder(stream);
+
+  mediaRecorder.ondataavailable = event => {
+    audioChunks.push(event.data);
+  };
+
+  mediaRecorder.onstop = () => {
+    const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+    const audioUrl = URL.createObjectURL(audioBlob);
+
+    const messages = JSON.parse(localStorage.getItem("messages") || "[]");
+    messages.push({
+      type: "audio",
+      audio: audioUrl,
+      timestamp: new Date().toLocaleString(),
+    });
+    localStorage.setItem("messages", JSON.stringify(messages));
+    audioChunks = []; // ਅਗਲੇ ਰਿਕਾਰਡਿੰਗ ਲਈ ਰੀਸੈੱਟ
+    document.getElementById("status").innerText = "ਆਵਾਜ਼ ਸੁਨੇਹਾ ਸੇਵ ਕੀਤਾ ਗਿਆ!";
+    loadMessages();
+  };
+
+  mediaRecorder.start();
+  document.getElementById("recordBtn").disabled = true;
+  document.getElementById("stopBtn").disabled = false;
+};
+
+document.getElementById("stopBtn").onclick = () => {
+  mediaRecorder.stop();
+  document.getElementById("recordBtn").disabled = false;
+  document.getElementById("stopBtn").disabled = true;
+};
+
+function loadMessages() {
+  const container = document.getElementById("messagesContainer");
+  container.innerHTML = "";
+
+  const messages = JSON.parse(localStorage.getItem("messages") || "[]");
+  messages.forEach(msg => {
+    const div = document.createElement("div");
+    div.className = "message-card";
+
+    if(msg.type === "text") {
+      div.innerHTML = `<strong>ਟੈਕਸਟ:</strong> ${msg.message}<br><small>${msg.timestamp}</small>`;
+    } else if(msg.type === "audio") {
+      div.innerHTML = `<strong>ਆਵਾਜ਼ ਸੁਨੇਹਾ:</strong><br><audio controls src="${msg.audio}"></audio><br><small>${msg.timestamp}</small>`;
+    }
+
+    container.appendChild(div);
+  });
+}
+</script>
+
+</body>
+</html>
