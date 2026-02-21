@@ -55,10 +55,10 @@ This project was developed as part of **Smart India Hackathon** to address chall
 
 ### 🔹 Note
 
-This project is created for **educational and hackathon purposes** and does not include backend or database integration.
+This project is created for **educational and hackathon purposes** 
 
 ---
 
 
 
-Just say the word 🙂
+
